@@ -1,0 +1,110 @@
+background        no
+out_to_console 	  yes
+out_to_x	  no
+update_interval	  1
+total_run_times	  0
+short_units	  yes
+pad_percents	  3
+
+override_utf8_locale yes
+
+TEXT
+,[
+
+
+${if_existing /proc/net/route wlan0}
+# Download:
+{"full_text":"DOWN","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${downspeedf wlan0}<100}${downspeed wlan0}","color":"\#AAF096","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf wlan0}<300}${downspeed wlan0}","color":"\#68B1E8","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf wlan0}<700}${downspeed wlan0}","color":"\#DB70B8","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf wlan0}<1000}${downspeed wlan0}","color":"\#9470DB","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf wlan0}>=1000}${downspeed wlan0}","color":"\#FF3333","separator":false,"separator_block_width":6},\
+{"full_text":"${endif}${endif}${endif}${endif}${endif}"},\
+
+# Upload:
+{"full_text":"UP","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${upspeedf wlan0}<15}${upspeed wlan0}","color":"\#AAF096","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${upspeedf wlan0}<35}${upspeed wlan0}","color":"\#9470DB","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${upspeedf wlan0}>=35}${upspeed wlan0}","color":"\#FF3333","separator":false,"separator_block_width":6},\
+{"full_text":"${endif}${endif}${endif}"},\
+${endif}
+${if_existing /proc/net/route eth0}
+
+# Download:
+{"full_text":"DOWN","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${downspeedf eth0}<100}${downspeed eth0}","color":"\#AAF096","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf eth0}<300}${downspeed eth0}","color":"\#68B1E8","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf eth0}<700}${downspeed eth0}","color":"\#DB70B8","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf eth0}<1000}${downspeed eth0}","color":"\#9470DB","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${downspeedf eth0}>=1000}${downspeed eth0}","color":"\#FF3333","separator":false,"separator_block_width":6},\
+{"full_text":"${endif}${endif}${endif}${endif}${endif}"},\
+
+# Upload:
+{"full_text":"UP","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${upspeedf eth0}<15}${upspeed eth0}","color":"\#AAF096","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${upspeedf eth0}<35}${upspeed eth0}","color":"\#9470DB","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${upspeedf eth0}>=35}${upspeed eth0}","color":"\#FF3333","separator":false,"separator_block_width":6},\
+{"full_text":"${endif}${endif}${endif}"},\
+${endif}
+
+# Memory:
+{"full_text":"MEM","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${memperc}<30}${mem}","color":"\#AAF096","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${memperc}<60}${mem}","color":"\#F0DC64","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${memperc}<85}${mem}","color":"\#FF9933","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${memperc}>=85}${mem}","color":"\#FF3333","separator":false,"separator_block_width":6},\
+{"full_text":"${endif}${endif}${endif}${endif}"},\
+
+# CPU:
+{"full_text":"CPU","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${if_match ${cpu cpu0}<25}${cpu cpu0}","color":"\#AAF096","separator":false,"separator_block_width":0},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${cpu cpu0}<50}${cpu cpu0}","color":"\#F0DC64","separator":false,"separator_block_width":0},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${cpu cpu0}<75}${cpu cpu0}","color":"\#FF9933","separator":false,"separator_block_width":0},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${cpu cpu0}<=100}${cpu cpu0}","color":"\#FF3333","separator":false,"separator_block_width":0},\
+{"full_text":"${endif}${endif}${endif}${endif}"},\
+{"full_text":"%","color":"\#EEEEEE","separator":false,"separator_block_width":6},\
+
+#Battery
+{"full_text": "BAT","color":"\"888888","separator":false,"separator_block_width":6},\
+{"full_text": "${if_match ${battery_percent}<20}${battery_percent}% [${battery_time}]","color":"\#dc322f","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${battery_percent}<50}${battery_percent}% [${battery_time}]","color":"\#b58900","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${if_match ${battery_percent}>=50}${battery_percent}% [${battery_time}]","color":"\#859900","separator":false,"separator_block_width":6},\
+{"full_text":"${else}"},\
+{"full_text":"${endif}${endif}${endif}"},\
+
+#Shows uptime
+  {"full_text": " U [${uptime_short}] ","color": "\#F0E0D0"},
+
+# Date:
+{"full_text":"","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${time %d/%m/%Y}","color":"\#EEEEEE","separator":false,"separator_block_width":6},
+#Shows time
+  {"full_text":"","color":"\#888888","separator":false,"separator_block_width":6},\
+{"full_text":"${time %H:%M:%S}","color":"\#EEEEEE","separator":false},\
+
+{"full_text":"[${exec skb 0,2}]","color":"\#F0DC64","separator":false}
+
+]
+
+#See 
